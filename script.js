@@ -176,9 +176,9 @@ function computerAI() {
 }
 
 function movementLimit(clientX) {
-  paddleBottomX = clientX - canvasPosition - paddleDiff;
+  paddleBottomX = clientX;
 
-  if (paddleBottomX < paddleDiff) {
+  if (paddleBottomX < 0) {
     paddleBottomX = 0;
   }
   if (paddleBottomX > width - paddleWidth) {
@@ -251,8 +251,8 @@ function startGame() {
     canvas.addEventListener("mousemove", (e) => {
       // console.log(e.clientX);
       playerMoved = true;
-      // console.log("x: ", e.clientX);
-      movementLimit(e.clientX);
+      console.log("x: ", e.offsetX);
+      movementLimit(e.offsetX);
       // Hide Cursor
       canvas.style.cursor = "none";
     });
