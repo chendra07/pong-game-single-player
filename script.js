@@ -175,6 +175,17 @@ function computerAI() {
   }
 }
 
+function movementLimit(clientX) {
+  paddleBottomX = clientX - canvasPosition - paddleDiff;
+
+  if (paddleBottomX < paddleDiff) {
+    paddleBottomX = 0;
+  }
+  if (paddleBottomX > width - paddleWidth) {
+    paddleBottomX = width - paddleWidth;
+  }
+}
+
 function showGameOverEl(winner) {
   // Hide Canvas
   canvas.hidden = true;
@@ -228,20 +239,26 @@ function startGame() {
   ballReset();
   createCanvas();
   animate();
-  canvas.addEventListener("mousemove", (e) => {
-    // console.log(e.clientX);
-    playerMoved = true;
-    // Compensate for canvas being centered
-    paddleBottomX = e.clientX - canvasPosition - paddleDiff;
-    if (paddleBottomX < paddleDiff) {
-      paddleBottomX = 0;
-    }
-    if (paddleBottomX > width - paddleWidth) {
-      paddleBottomX = width - paddleWidth;
-    }
-    // Hide Cursor
-    canvas.style.cursor = "none";
-  });
+
+  if (isMobile.matches) {
+    canvas.addEventListener("touchmove", (e) => {
+      var touch = e.touches[0];
+      playerMoved = true;
+
+      movementLimit(touch.clientX);
+    });
+  } else {
+    canvas.addEventListener("mousemove", (e) => {
+      // console.log(e.clientX);
+      playerMoved = true;
+      // Compensate for canvas being centered
+
+      e.clientX;
+      movementLimit(paddleBottomX);
+      // Hide Cursor
+      canvas.style.cursor = "none";
+    });
+  }
 }
 
 // On Load
