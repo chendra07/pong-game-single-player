@@ -251,10 +251,8 @@ function startGame() {
     canvas.addEventListener("mousemove", (e) => {
       // console.log(e.clientX);
       playerMoved = true;
-      // Compensate for canvas being centered
-
-      e.clientX;
-      movementLimit(paddleBottomX);
+      // console.log("x: ", e.clientX);
+      movementLimit(e.clientX);
       // Hide Cursor
       canvas.style.cursor = "none";
     });
